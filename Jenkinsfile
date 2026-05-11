@@ -20,12 +20,11 @@ pipeline {
         stage('Build-Analysis') {
           steps {
             withSonarQubeEnv('SonarQube') {
-              withMaven(maven: 'M398') {
                 sh '''
                    mvn clean package sonar:sonar \
                    -Dsonar.token=$SONAR_TOKEN \
                    -Dsonar.projectKey=numeric-application \
-                   -Dsonar.qualitygate.wait=true
+            
                    '''
               }
             }
@@ -34,7 +33,7 @@ pipeline {
         
         stage('Quality Gate') {
            steps {
-              timeout(time: 1, unit: 'HOURS') {
+              timeout(time: 10, unit: 'MINUTES') {
                  waitForQualityGate abortPipeline: true
               }
            }
