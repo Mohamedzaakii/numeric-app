@@ -19,7 +19,7 @@ pipeline {
 
         stage('Build & Analysis') {
           steps {
-           // withSonarQubeEnv('SonarQube') {
+             withSonarQubeEnv('SonarQube') {
                 sh '''
                    mvn clean package sonar:sonar \
                    -Dsonar.token=$SONAR_TOKEN \
