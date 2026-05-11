@@ -26,7 +26,7 @@ pipeline {
                    -Dsonar.projectKey=numeric-application 
             
                    '''
-              
+              }   
             }
           }
         
