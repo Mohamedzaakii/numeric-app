@@ -17,7 +17,7 @@ pipeline {
         }
     
 
-        stage('Build and Analysis') {
+        stage('Build- Analysis') {
           steps {
             withSonarQubeEnv('SonarQube') {
               withMaven(maven: 'M398') {
