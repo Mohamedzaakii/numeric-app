@@ -4,7 +4,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonar-token')
     }
     stages {
-        stage('Unit Tests - JUnit and JaCoCo') {
+        stage('Unit Tests') {
             steps {
                 sh 'mvn test'
             }
