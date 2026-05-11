@@ -1,6 +1,8 @@
 pipeline {
     agent any
-   
+     environment {
+        SONAR_TOKEN = credentials('sonar-token')
+    }
     stages {
         stage('Unit Tests') {
             steps {
@@ -17,10 +19,10 @@ pipeline {
 
         stage('Build and Analysis') {
           steps {
-            withSonarQubeEnv('SonarQube') {
+           // withSonarQubeEnv('SonarQube') {
                 sh '''
                    mvn clean package sonar:sonar \
-                
+                   -Dsonar.token=$SONAR_TOKEN \
                    -Dsonar.projectKey=numeric-application 
             
                    '''
