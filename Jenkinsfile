@@ -21,7 +21,12 @@ pipeline {
           steps {
             withSonarQubeEnv('SonarQube') {
               withMaven(maven: 'M398') {
-                sh 'mvn clean package sonar:sonar -Dsonar.qualitygate.wait=true'
+                sh '''
+                   mvn clean package sonar:sonar \
+                   -Dsonar.token=$SONAR_TOKEN \
+                   -Dsonar.projectKey=numeric-application \
+                   -Dsonar.qualitygate.wait=true
+                   '''
               }
             }
           }
