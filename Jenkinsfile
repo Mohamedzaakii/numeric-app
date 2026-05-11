@@ -17,17 +17,14 @@ pipeline {
         }
     
 
-        stage('SonarQube-SAST') {
-            steps {
-                sh 'mvn clean package -DskipTests=true'
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
-                sh """
-                    mvn sonar:sonar \
-                        -Dsonar.projectKey=numeric-application \
-                        -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.token=${SONAR_TOKEN}
-                """
+        stage('Build & Analyze') {
+          steps {
+            withSonarQubeEnv('SonarQube') {
+              withMaven(maven: 'Maven 3.5') {
+                sh 'mvn clean package sonar:sonar'
+              }
             }
+          }
         }
         
         stage('Quality Gate') {
